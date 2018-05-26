@@ -79,8 +79,27 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
     }
+
+    /* This function manages collision detection (credit goes to MDN,
+     * link provided here: https://developer.mozilla.org/en-US/docs/Games/Techniques/2D_collision_detection)
+     * by comparing enemy and player rectangles, which heights and widths are defined in their respective class constructors,
+     * and, if the x- or y-coordinates of either overlap, calls the resetPlayer() method on the player object.
+     */ 
+    function checkCollisions() {
+        allEnemies.forEach(function(enemy) {
+            foeX = Math.round(enemy.x);
+
+            if (player.x < foeX + enemy.width &&
+                player.x + player.width > foeX &&
+                player.y < enemy.y + enemy.height &&
+                player.y + player.height > enemy.y) {
+                    player.resetPlayer();
+            }
+        });
+    }
+    
 
     /* This is called by the update function and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls

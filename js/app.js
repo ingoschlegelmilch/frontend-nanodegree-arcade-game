@@ -1,24 +1,26 @@
 // Enemies our player must avoid
 class Enemy {
     constructor(x, y) {
-    // Variables applied to each of our instances go here,
-    // we've provided one for you to get started
+        // Variables applied to each of our instances go here,
+        // we've provided one for you to get started
     
-    // The image/sprite for our enemies, this uses
-    // a helper we've provided to easily load images
-    this.sprite = 'images/enemy-bug.png';
-    this.x = x;
-    this.y = y;
+        // The image/sprite for our enemies, this uses
+        // a helper we've provided to easily load images
+        this.sprite = 'images/enemy-bug.png';
+        this.x = x;
+        this.y = y;
+        this.height = 63;
+        this.width = 77;
 
-    this.respawn();
+        this.respawn();
     }
+    
     // Update the enemy's position, required method for game
     // Parameter: dt, a time delta between ticks
     update(dt) {
         // You should multiply any movement by the dt parameter
         // which will ensure the game runs at the same speed for
         // all computers.
-        //console.log(dt, this.x, this.y);
         if (this.x > 505) {
             this.respawn(); 
         } else {
@@ -28,16 +30,17 @@ class Enemy {
 
     // Draw the enemy on the screen, required method for game
     render() {
-        ctx.drawImage(Resources.get(this.sprite), this.x, (this.y * 83) - 20);
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
     // When enemy "leaves" canvas on right side, 
-    // respawn it with random velocity on left side outside of canvas.
+    // respawn it with random velocity(the amount of pixels travelled in 1 second) on left side outside of canvas.
     respawn() {
         this.x = -101;
-        this.speed = this.calcSpeed(200, 700);
+        this.speed = this.calcSpeed(100, 600);
     }
-    // Function to calculate a random speed between two values to provide a minimum speed.
+    // Function to calculate a random speed between two values to provide a minimum speed,
+    // credits go to (https://developer.mozilla.org/de/docs/Web/JavaScript/Reference/Global_Objects/Math/math.random).
     calcSpeed(min, max) {
         return Math.random() * (max - min) + min;
     }
@@ -51,49 +54,69 @@ class Player {
         this.sprite = 'images/char-boy.png';
         this.x = x;
         this.y = y;
+        this.height = 76;
+        this.width = 67;
     }
 
+    // updates the players position and checks if the win condition is met via the checkWinCondition() method.
     update(dt) {
-        console.log(dt, this.x, this.y);
+        this.checkWinCondition();
+
+    }
+
+    // Method to check if the win condition is met - when true, return an alert box with a message
+    // and return the player object to its starting position
+    checkWinCondition() {
+        if (this.y === -11) {
+            setTimeout(function() {
+                player.resetPlayer();
+                alert('Yay! You have made it to the river!');
+            }, 1000);
+        }
+    }
+
+    // Method to reset the player object's position to the initial starting point.
+    resetPlayer() {
+        this.x = 202;
+        this.y = 404;
     }
 
     render() {
-        ctx.drawImage(Resources.get(this.sprite), this.x * 101, (this.y * 83) - 20);
+        ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
     }
 
     // Switch statement handles movement of player:
     // When player hits the boundaries of the canvas,
     // player cannot move further in that direction.
     handleInput(key) {
-        console.log(key);
         
         switch(key) {
             case "left":
                 if (this.x === 0) {
                     return;
                 } else {
-                    this.x = this.x - 1;
+                    this.x = this.x - 101;
                 }
                 break;
             case "right":
-                if (this.x === 4) {
+                if (this.x === 404) {
                     return;
                 } else {
-                    this.x = this.x + 1;
+                    this.x = this.x + 101;
                     break;
                 }
             case "up":
-                if (this.y === 0) {
+                if (this.y === -11) {
                     return;
                 } else {
-                    this.y = this.y - 1;
+                    this.y = this.y - 83;
                     break;
                 }
             case "down":
-                if (this.y === 5) {
+                if (this.y === 404) {
                     return;
                 } else {
-                    this.y = this.y + 1;
+                    this.y = this.y + 83;
                     break;
                 }
         }
@@ -105,17 +128,19 @@ class Player {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 
-var enemy1 = new Enemy(1, 1);
-var enemy2 = new Enemy(1, 2);
-var enemy3 = new Enemy(1, 3);
+var enemy1 = new Enemy(-101, 63);
+var enemy2 = new Enemy(-101, 144);
+var enemy3 = new Enemy(-101, 227);
+var enemy4 = new Enemy(-101, 63);
 
 var allEnemies = [];
 
 allEnemies.push(enemy1);
 allEnemies.push(enemy2);
 allEnemies.push(enemy3);
+allEnemies.push(enemy4);
 
-var player = new Player(2, 5);
+var player = new Player(202, 404);
 
 
 // This listens for key presses and sends the keys to your
@@ -127,6 +152,5 @@ document.addEventListener('keyup', function(e) {
         39: 'right',
         40: 'down'
     };
-    console.log(e.keyCode);
     player.handleInput(allowedKeys[e.keyCode]);
 });
