@@ -64,14 +64,23 @@ class Player {
 
     }
 
-    // Method to check if the win condition is met - when true, return an alert box with a message
+    // Method to check if the win condition is met - when true, open up the winModal
     // and return the player object to its starting position
     checkWinCondition() {
         if (this.y === -11) {
             setTimeout(function() {
                 player.resetPlayer();
-                alert('Yay! You have made it to the river!');
             }, 1000);
+
+            modal.style.display = "block";
+            startModal.style.display = "none";
+            winModal.style.display = "block";
+            span.onclick = () => modal.style.display = "none";
+            window.onclick = function (event) {
+                if (event.target === modal) {
+                    modal.style.display = 'none';
+                }
+            };
         }
     }
 
@@ -142,6 +151,18 @@ allEnemies.push(enemy4);
 
 var player = new Player(202, 404);
 
+// Variables for creating everything regarding the modal functionality.
+var modal = document.querySelector('.modal');
+var startModal = document.querySelector('.startModal');
+var winModal = document.querySelector('.winModal');
+var span = document.querySelector('.close');
+var btn = document.querySelector('.btn');
+
+(function startUp() {
+    modal.style.display = 'block';
+    startModal.style.display = 'block';
+    btn.onclick = () => modal.style.display = 'none';
+})();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
