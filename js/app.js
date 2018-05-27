@@ -9,7 +9,7 @@ class Enemy {
         this.sprite = 'images/enemy-bug.png';
         this.x = x;
         this.y = y;
-        this.height = 63;
+        this.height = 50;
         this.width = 77;
 
         this.respawn();
@@ -54,7 +54,7 @@ class Player {
         this.sprite = 'images/char-boy.png';
         this.x = x;
         this.y = y;
-        this.height = 76;
+        this.height = 70;
         this.width = 67;
     }
 

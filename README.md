@@ -1,6 +1,11 @@
-frontend-nanodegree-arcade-game
+#frontend-nanodegree-arcade-game
 ===============================
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+##Game functionality
+======
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+This is a game project for the Udacity frontend nanodegree inspired by the classic arcade game Frogger, developed by SEGA and published by KONAMI in 1981.
+
+The goal of the game is to cross the street with your character, avoid any obstacles on the way and reach the water on top of the game board.
+Before you get to play the game, there will be a modal to provide a little introduction and instructions on how to control the player.
+You control the character by using the arrow keys on your keyboard. When you get hit by a bug, the character is sent back to the starting position, when you manage to get to the river, another modal will be displayed, congratulating you on your win, meanwhile the character gets reset, so you can start over.
