@@ -1,7 +1,7 @@
-#frontend-nanodegree-arcade-game
+# frontend-nanodegree-arcade-game
 ===============================
 
-##Game functionality
+## Game functionality
 ======
 
 This is a game project for the Udacity frontend nanodegree inspired by the classic arcade game Frogger, developed by SEGA and published by KONAMI in 1981.
